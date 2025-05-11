@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>藥物劑量換算程式 (Web 版)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>藥物劑量換算程式</h1>
+
+        <div class="section">
+            <h3>選擇藥物</h3>
+            <button id="levophedBtn">Levophed</button>
+            <button id="dopamineBtn">Dopamine</button>
+        </div>
+
+        <div class="section">
+            <h3>劑量、稀釋體積與體重設定</h3>
+            <div class="input-group">
+                <label for="doseMgInput">總劑量 (mg):</label>
+                <input type="number" id="doseMgInput" value="0" step="any">
+                <button class="increment-btn" data-target="doseMgInput">+</button>
+                <button class="decrement-btn" data-target="doseMgInput">-</button>
+            </div>
+            <div class="input-group">
+                <label for="volumeMlInput">稀釋體積 (mL):</label>
+                <input type="number" id="volumeMlInput" value="0" step="any">
+                <button class="increment-btn" data-target="volumeMlInput">+</button>
+                <button class="decrement-btn" data-target="volumeMlInput">-</button>
+            </div>
+            <div class="input-group">
+                <label for="weightKgInput">體重 (kg):</label>
+                <input type="number" id="weightKgInput" value="0" step="any">
+                <button class="increment-btn" data-target="weightKgInput">+</button>
+                <button class="decrement-btn" data-target="weightKgInput">-</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>換算結果</h3>
+            <div class="input-group">
+                <label for="resultAInput">µg/kg/min (A):</label>
+                <input type="number" id="resultAInput" value="0.00" step="any">
+                <button class="increment-btn" data-target="resultAInput">+</button>
+                <button class="decrement-btn" data-target="resultAInput">-</button>
+            </div>
+            <div class="input-group">
+                <label for="resultBInput">mg/hour (B):</label>
+                <input type="number" id="resultBInput" value="0.00" step="any">
+                <button class="increment-btn" data-target="resultBInput">+</button>
+                <button class="decrement-btn" data-target="resultBInput">-</button>
+            </div>
+            <div class="input-group">
+                <label for="resultCInput">mL/hour (C):</label>
+                <input type="number" id="resultCInput" value="0.00" step="any">
+                <button class="increment-btn" data-target="resultCInput">+</button>
+                <button class="decrement-btn" data-target="resultCInput">-</button>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.section {
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+}
+
+.section h3 {
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* 讓元素在小螢幕上換行 */
+}
+
+.input-group label {
+    flex: 0 0 150px; /* 固定標籤寬度 */
+    margin-right: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input[type="number"] {
+    flex: 1; /* 讓輸入框佔據剩餘空間 */
+    max-width: 120px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box; /* 包含 padding 和 border 在寬度內 */
+}
+
+.input-group button {
+    padding: 8px 12px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    min-width: 35px; /* 確保按鈕不會過小 */
+}
+
+.input-group button:hover {
+    background-color: #2980b9;
+}
+
+#levophedBtn, #dopamineBtn {
+    background-color: #27ae60;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+}
+
+#levophedBtn:hover, #dopamineBtn:hover {
+    background-color: #219451;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #e74c3c;
+    border-radius: 5px;
+    background-color: #fdeded;
+}
