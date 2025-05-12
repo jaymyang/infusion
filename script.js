@@ -1,8 +1,20 @@
 // 藥物資料
 const MEDICATIONS = {
-    "Levophed": { dose_mg: 2000, volume_ml: 500 },
-    "Dopamine": { dose_mg: 400, volume_ml: 400 }
+    "Levophed": { dose_mg: 16, volume_ml: 266 },
+    "Dopamine": { dose_mg: 800, volume_ml: 270 },
+	"Epinephrine": { dose_mg: 10, volume_ml: 260 },
+	"Midazolam": { dose_mg: 90, volume_ml: 90 },
+	"Atracurium": { dose_mg: 200, volume_ml: 100 }
 };
+
+// 新增：藥物的閾值設定 (µg/kg/min)（以dopamine為例）
+const LEVOPHED_THRESHOLD_A = 0.5;
+const DOPAMINE_THRESHOLD_A = 20;
+//const EPINEPHRINE_THRESHOLD_A = 20;
+//const MIDAZOLAM_THRESHOLD_A = 20;
+const ATRACURIUM_THRESHOLD_A = 20;
+
+let currentMedication = null; // 新增變數，用於追蹤當前選擇的藥物
 
 // DOM 元素引用
 const doseMgInput = document.getElementById('doseMgInput');
@@ -15,12 +27,15 @@ const errorMessageDiv = document.getElementById('errorMessage');
 
 const levophedBtn = document.getElementById('levophedBtn');
 const dopamineBtn = document.getElementById('dopamineBtn');
-
+const epibephrineBtn = document.getElementById('epinephrineBtn');
+const midazolamBtn = document.getElementById('midazolamBtn');
+const atracuriumBtn = document.getElementById('atracuriumBtn');
 // 狀態變數
 let activeInputType = null; // 'A', 'B', 'C'
-let currentDoseMg = 0.0;
-let currentVolumeMl = 0.0;
-let currentWeightKg = 0.0;
+let currentDoseMg = 0;
+let currentVolumeMl = 0;
+let currentWeightKg = 0;
+
 
 // 獲取數值，如果轉換失敗則返回 0
 function safeGetNumber(element) {
@@ -115,16 +130,37 @@ function updateAll() {
              return;
         }
 
-
+// 設定顯示值
         resultAInput.value = roundToTwoDecimals(numA_ug_kg_min);
         resultBInput.value = roundToTwoDecimals(numB_mg_hour);
         resultCInput.value = roundToTwoDecimals(numC_ml_hour);
+
+// **修正：集中管理閾值判斷和樣式設定**
+resultAInput.classList.remove('high-dose-warning'); // 先移除所有警示樣式，避免殘留
+
+if (currentMedication === "Levophed") {
+    if (numA_ug_kg_min > LEVOPHED_THRESHOLD_A) {
+        resultAInput.classList.add('high-dose-warning');
+    }
+} else if (currentMedication === "Dopamine") {
+    if (numA_ug_kg_min > DOPAMINE_THRESHOLD_A) {
+        resultAInput.classList.add('high-dose-warning');
+    }
+} else if (currentMedication === "Atracurium") {
+    if (numA_ug_kg_min > ATRACURIUM_THRESHOLD_A) {
+        resultAInput.classList.add('high-dose-warning');
+    }
+}
+// 如果有其他藥物，可以在這裡添加更多的 else if 條件
 
     } catch (error) {
         errorMessageDiv.textContent = `錯誤: ${error.message}`;
         resultAInput.value = '';
         resultBInput.value = '';
         resultCInput.value = '';
+        resultCInput.value = '';
+        // 錯誤時也清除警示樣式
+        resultAInput.classList.remove('high-dose-warning');
     }
 }
 
@@ -152,6 +188,7 @@ function setActiveInputType(type) {
 // 選擇藥物
 function selectMedication(medName) {
     if (MEDICATIONS[medName]) {
+        currentMedication = medName; // **新增：更新當前選擇的藥物**
         doseMgInput.value = MEDICATIONS[medName].dose_mg;
         volumeMlInput.value = MEDICATIONS[medName].volume_ml;
         activeInputType = null; // 重置活動輸入類型
@@ -169,10 +206,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 綁定選擇藥物按鈕
     levophedBtn.addEventListener('click', () => selectMedication('Levophed'));
     dopamineBtn.addEventListener('click', () => selectMedication('Dopamine'));
+	epinephrineBtn.addEventListener('click', () => selectMedication('Epinephrine'));
+	midazolamBtn.addEventListener('click', () => selectMedication('Midazolam'));
+	atracuriumBtn.addEventListener('click', () => selectMedication('Atracurium'));
 
-    // 綁定劑量和稀釋體積輸入框的 change 事件
-    doseMgInput.addEventListener('input', updateAll);
-    volumeMlInput.addEventListener('input', updateAll);
+    // 綁定劑量和稀釋體積輸入框的 input 事件
+    doseMgInput.addEventListener('input', () => {
+        activeInputType = null; // 這些輸入框的改變不應設定活動類型
+        updateAll();
+    });
+    volumeMlInput.addEventListener('input', () => {
+        activeInputType = null; // 這些輸入框的改變不應設定活動類型
+        updateAll();
+    });
 
     // 綁定體重輸入框的 Enter 鍵事件
     weightKgInput.addEventListener('keydown', (event) => {
@@ -182,10 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 綁定結果輸入框的 input 事件，並設置活動輸入類型
-    resultAInput.addEventListener('input', () => setActiveInputType('A'));
-    resultBInput.addEventListener('input', () => setActiveInputType('B'));
-    resultCInput.addEventListener('input', () => setActiveInputType('C'));
+    // 綁定結果輸入框的 change 事件，並設置活動輸入類型
+	resultAInput.addEventListener('change', () => setActiveInputType('A'));
+	resultBInput.addEventListener('change', () => setActiveInputType('B'));
+	resultCInput.addEventListener('change', () => setActiveInputType('C'));
 
     // 頁面載入時先執行一次更新，以顯示初始值
     updateAll();
