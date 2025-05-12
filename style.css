@@ -83,14 +83,14 @@ h1 {
     background-color: #2980b9;
 }
 
-#levophedBtn, #dopamineBtn {
+#levophedBtn, #dopamineBtn , #epinephrineBtn {
     background-color: #27ae60;
     margin-right: 10px;
     padding: 10px 20px;
     font-size: 1.1em;
 }
 
-#levophedBtn:hover, #dopamineBtn:hover {
+#levophedBtn:hover, #dopamineBtn:hover , #epinephrineBtn:hover{
     background-color: #219451;
 }
 
@@ -103,4 +103,8 @@ h1 {
     border: 1px solid #e74c3c;
     border-radius: 5px;
     background-color: #fdeded;
+}
+.high-dose-warning {
+    color: red;
+    font-weight: bold;
 }
